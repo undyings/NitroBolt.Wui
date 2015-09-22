@@ -86,69 +86,80 @@ namespace NitroBolt.Wui
         Element.ToHtmlText(builder);
     }
   }
-    public class HElement : HObject
+  public class HElement : HObject
+  {
+    public readonly hevent handler = null;
+
+    public HElement(HName name, params object[] content)
     {
-        public HElement(HName name, params object[] content)
-        {
-            this.Name = name;
+      this.Name = name;
 
-            var attributes = new List<HAttribute>();
-            var nodes = new List<HObject>();
-            foreach (var node in HObject.HObjects(content))
-            {
-                if (node is HAttribute)
-                    attributes.Add(node as HAttribute);
-                else
-                    nodes.Add(node);
-            }
-            this.Attributes = attributes.ToArray();
-            this.Nodes = nodes.ToArray();
-        }
-        public readonly HName Name;
-        public readonly HAttribute[] Attributes;
-        public readonly HObject[] Nodes;
-
-        public IEnumerable<HElement> Elements()
+      foreach (object node in content)
+      {
+        if (node is hevent)
         {
-            return Nodes.OfType<HElement>();
+          handler = (hevent)node;
+          break;
         }
+      }
 
-        public IEnumerable<HElement> Elements(HName name)
-        {
-            return Elements().Where(element => element.Name.LocalName == name.LocalName && element.Name.Namespace == name.Namespace);
-        }
-        public HElement Element(HName name)
-        {
-            return Elements(name).FirstOrDefault();
-        }
-
-        public override void ToHtmlText(StringBuilder builder, string prefix = "")
-        {
-            builder.Append(prefix);
-            builder.Append("<");
-            //builder.Append(Name.ToString());
-            builder.Append(Name.LocalName?.ToString());
-            foreach (var attribute in Attributes)
-            {
-                builder.Append(' ');
-                attribute.ToHtmlText(builder);
-            }
-            if (!Nodes.Any())
-                builder.AppendLine("/>");
-            else
-            {
-                builder.AppendLine(">");
-                foreach (var node in Nodes)
-                    node.ToHtmlText(builder, "  " + prefix);
-                builder.Append(prefix);
-                builder.Append("</");
-                //builder.Append(Name.ToString());
-                builder.Append(Name.LocalName?.ToString());
-                builder.AppendLine(">");
-            }
-
-        }
+      var attributes = new List<HAttribute>();
+      var nodes = new List<HObject>();
+      foreach (var node in HObject.HObjects(content))
+      {
+        if (node is HAttribute)
+          attributes.Add(node as HAttribute);
+        else
+          nodes.Add(node);
+      }
+      this.Attributes = attributes.ToArray();
+      this.Nodes = nodes.ToArray();
     }
+    public readonly HName Name;
+    public readonly HAttribute[] Attributes;
+    public readonly HObject[] Nodes;
+
+    public IEnumerable<HElement> Elements()
+    {
+      return Nodes.OfType<HElement>();
+    }
+
+    public IEnumerable<HElement> Elements(HName name)
+    {
+      return Elements().Where(element => element.Name.LocalName == name.LocalName && element.Name.Namespace == name.Namespace);
+    }
+    public HElement Element(HName name)
+    {
+      return Elements(name).FirstOrDefault();
+    }
+
+    public override void ToHtmlText(StringBuilder builder, string prefix = "")
+    {
+      builder.Append(prefix);
+      builder.Append("<");
+      //builder.Append(Name.ToString());
+      builder.Append(Name.LocalName?.ToString());
+      foreach (var attribute in Attributes)
+      {
+        builder.Append(' ');
+        attribute.ToHtmlText(builder);
+      }
+      if (!Nodes.Any())
+        builder.AppendLine("/>");
+      else
+      {
+        builder.AppendLine(">");
+        foreach (var node in Nodes)
+          node.ToHtmlText(builder, "  " + prefix);
+        builder.Append(prefix);
+        builder.Append("</");
+        //builder.Append(Name.ToString());
+        builder.Append(Name.LocalName?.ToString());
+        builder.AppendLine(">");
+      }
+
+    }
+  }
   public class HAttribute:HObject
   {
     public HAttribute(HName name, object value)
