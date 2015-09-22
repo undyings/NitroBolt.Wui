@@ -261,7 +261,7 @@ namespace NitroBolt.Wui
 
   public class hdata : IEnumerable<HObject>
   {
-    List<HObject> attributes = new List<HObject>();
+    protected List<HObject> attributes = new List<HObject>();
     public void Add(string name, object value)
     {
       attributes.Add(h.data(name, value));
@@ -276,6 +276,23 @@ namespace NitroBolt.Wui
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
       return attributes.GetEnumerator();
+    }
+  }
+
+  public class hevent : hdata
+  {
+    readonly Func<object[], JsonData, object> eventHandler;
+
+    public object Execute(JsonData jsonData)
+    {
+      object[] ids = attributes.ConvertAll(delegate (HObject attr)
+      { return ((HAttribute)attr).Value; }).ToArray();
+      return eventHandler(ids, jsonData);
+    }
+
+    public hevent(Func<object[], JsonData, object> eventHandler)
+    {
+      this.eventHandler = eventHandler;
     }
   }
 }
