@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui", "NitroBolt.Wui\NitroBolt.Wui.csproj", "{6ADEFD5A-BB8A-44F8-9E8E-CDFBD0ABC510}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Example.Web.StateMachine", "NitroBolt.Wui.Example.Web.StateMachine\NitroBolt.Wui.Example.Web.StateMachine.csproj", "{A38284C4-D91D-415C-B940-F8413F13C7F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitroBolt.Wui.Tests", "NitroBolt.Wui.Tests\NitroBolt.Wui.Tests.csproj", "{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitroBolt.Wui.Core", "NitroBolt.Wui.Core\NitroBolt.Wui.Core.csproj", "{0F8C29CF-434F-40E5-9889-9B4AF38A0687}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitroBolt.Wui.Example.Core", "NitroBolt.Wui.Example.Core\NitroBolt.Wui.Example.Core.csproj", "{B9363A95-F19B-47F0-8560-793CF9F648F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB306755-E4E2-45B1-BCCC-8D44AED0CD8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F8C29CF-434F-40E5-9889-9B4AF38A0687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F8C29CF-434F-40E5-9889-9B4AF38A0687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F8C29CF-434F-40E5-9889-9B4AF38A0687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F8C29CF-434F-40E5-9889-9B4AF38A0687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9363A95-F19B-47F0-8560-793CF9F648F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9363A95-F19B-47F0-8560-793CF9F648F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9363A95-F19B-47F0-8560-793CF9F648F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9363A95-F19B-47F0-8560-793CF9F648F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
