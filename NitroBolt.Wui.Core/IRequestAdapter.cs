@@ -18,10 +18,27 @@ namespace NitroBolt.Wui
 		TResponse ToResponse(string content, string contentType, HtmlResult<HElement> result);
 	}
 
-	public interface IWuiState
+	public class WuiInitiator
 	{
-		WuiCallKind CallKind { get; set; }
+		public readonly WuiCallKind CallKind;
+		public readonly JsonData? Json;
+		public Action<JsonData>? FoundEvent = null;
+
+		public WuiInitiator(WuiCallKind callKind, JsonData? json)
+		{
+			this.CallKind = callKind;
+			this.Json = json;
+		}
+
+		public WuiInitiator(WuiCallKind callKind) : this(callKind, null)
+		{
+		}
 	}
+
+	//public interface IWuiState
+	//{
+	//	WuiCallKind CallKind { get; set; }
+	//}
 
 	public enum WuiCallKind
 	{

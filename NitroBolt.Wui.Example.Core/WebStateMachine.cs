@@ -6,7 +6,7 @@ namespace NitroBolt.Wui.Example.Core
 {
 	public class WebStateMachine
 	{
-		public static NitroBolt.Wui.HtmlResult<HElement> HView(MainState state, 
+		public static NitroBolt.Wui.HtmlResult<HElement> HView(WuiInitiator initiator, MainState state, 
 			JsonData[] jsons, RequestData request)
 		{
 			foreach (var json in jsons.OrEmpty())
@@ -319,7 +319,7 @@ namespace NitroBolt.Wui.Example.Core
 			return null;
 		}
 	}
-	public class MainState : IWuiState
+	public class MainState
 	{
 		public MainState() : this(null) { }
 		public MainState(ImmutableList<Order> orders = null)
@@ -327,13 +327,6 @@ namespace NitroBolt.Wui.Example.Core
 			Orders = orders ?? ImmutableList<Order>.Empty;
 		}
 		public readonly ImmutableList<Order> Orders;
-
-		volatile WuiCallKind callKind;
-		public WuiCallKind CallKind
-		{
-			get { return callKind; }
-			set { callKind = value; }
-		}
 
 		public MainState With(ImmutableList<Order> orders = null)
 		{

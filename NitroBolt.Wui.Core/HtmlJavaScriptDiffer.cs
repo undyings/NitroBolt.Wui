@@ -9,7 +9,10 @@ namespace NitroBolt.Wui
 {
   public class HtmlJavaScriptDiffer
   {
-    public static TElement[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true, string syncJsName = null, string frame = null)
+    public static string JQueryDebugPath = "https://code.jquery.com/jquery-1.10.2.js";
+    public static string JQueryReleasePath = "https://code.jquery.com/jquery-1.10.2.min.js";
+
+		public static TElement?[] Scripts<TElement, TAttribute, TObject>(IElementProvider<TElement, TAttribute, TObject> elementProvider, bool isDebug = false, TimeSpan? refreshPeriod = null, bool isInlineSyncScript = true, string syncJsName = null, string frame = null)
     {
       return new[]
         {
@@ -17,9 +20,9 @@ namespace NitroBolt.Wui
             elementProvider.Attribute("http-equiv", "X-UA-Compatible"),
             elementProvider.Attribute("content", "IE=11")
            ),
-          isDebug 
-            ? elementProvider.Element("script", elementProvider.Attribute("src", "https://code.jquery.com/jquery-1.10.2.js"), "")
-            : elementProvider.Element("script", elementProvider.Attribute("src", "https://code.jquery.com/jquery-1.10.2.min.js"), ""),
+          isDebug
+            ? elementProvider.Element("script", elementProvider.Attribute("src", JQueryDebugPath), "")
+            : elementProvider.Element("script", elementProvider.Attribute("src", JQueryReleasePath), ""),
           isInlineSyncScript 
           ? elementProvider.Element("script", 
             elementProvider.Attribute("type", "text/javascript"),

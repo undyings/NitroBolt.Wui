@@ -16,17 +16,19 @@ namespace NitroBolt.Wui
   {
     public static readonly string NitroBolt_Wui_js = "/scripts/NitroBolt.Wui.2.0.48.js";
 
-    public static HElement[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
+    public static HElement?[] Scripts(string frame = null, bool isDebug = false, TimeSpan? refreshPeriod = null, string syncJsName = null)
     {
       return HtmlJavaScriptDiffer.Scripts(new HElementProvider(), isDebug: isDebug, refreshPeriod: refreshPeriod, isInlineSyncScript: false, syncJsName: syncJsName ?? NitroBolt_Wui_js, frame: frame);
     }
 
-    public static TResponse Process<TRequest, TResponse, TState>(TRequest request, IRequestAdapter<TRequest, TResponse> requestAdapter, Func<TState, JsonData[], TRequest, HtmlResult<HElement>> page) where TState : class, NitroBolt.Wui.IWuiState, new()
+    public static TResponse Process<TRequest, TResponse, TState>(TRequest request, IRequestAdapter<TRequest, TResponse> requestAdapter, 
+      Func<WuiInitiator, TState, JsonData[], TRequest, HtmlResult<HElement>> page) where TState : class, new()
     {
       if (requestAdapter.IsGetMethod(request))
       {
-        TState state = new TState() { CallKind = WuiCallKind.FirstHtml };
-        var result = page(state, Array<JsonData>.Empty, request);
+        //TState state = new TState() { CallKind = WuiCallKind.FirstHtml };
+        TState state = new();
+        var result = page(new WuiInitiator(WuiCallKind.FirstHtml), state, Array<JsonData>.Empty, request);
         var rawResponse = requestAdapter.RawResponse(result);
         if (rawResponse != null)
           return rawResponse;
@@ -62,9 +64,8 @@ namespace NitroBolt.Wui
         try
         {
           TState state = prev?.Item2?.State.As<TState>() ?? new TState();
-          state.CallKind = WuiCallKind.View;
 
-					result = page(state, json_commands, request);
+					result = page(new WuiInitiator(WuiCallKind.View), state, json_commands, request);
         }
         catch (Exception exc) //HACK ловятся все ошибки для того, чтобы не зациклилась страница. Добавить обработку ошибок на сторону js.
         {
